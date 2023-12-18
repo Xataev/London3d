@@ -68,6 +68,10 @@
 	scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
 	var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
     camera.fov = 0.4
+    camera.panningSensibility *= 0.1;
+    camera.wheelPrecision *= 0.1;
+    camera.angularSensibilityX *= 3;
+    camera.angularSensibilityY *= 3;
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
