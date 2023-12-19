@@ -61,12 +61,12 @@
         var scene = null;
         var sceneToRender = null;
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        var createScene = function () {
+var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
-		
+
     scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
+	var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
     camera.fov = 0.4
     camera.panningSensibility *= 0.1;
     camera.wheelPrecision *= 0.1;
@@ -75,24 +75,57 @@
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
+
     var gerkin = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/9e030f71bf1647403ed616626fe858b1a1bb278f/", "gerkin.glb", scene);
+    
+    // Our built-in 'ground' shape.
+    var gherkinGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80}, scene);
+    var scalpGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 90, height: 90}, scene);
+    var cheeseGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 120, height: 120}, scene);
    
+   
+    var roundBgMat = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
+    roundBgMat.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Xataev/London3d/8fe639f0d4009bf37f5ed7dd5c78bd962df7bf84/circle_blured_01.png", scene);
+    roundBgMat.diffuseTexture.hasAlpha = true; 
+    roundBgMat.shadowLevel = 0.4;
+
+    gherkinGround.material = roundBgMat;
+
+    var squareBgMat = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
+    squareBgMat.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Xataev/London3d/main/square_blured_01.png", scene);
+    squareBgMat.diffuseTexture.hasAlpha = true; 
+    squareBgMat.shadowLevel = 0.4;
+
+    scalpGround.material = squareBgMat;    
+    cheeseGround.material = squareBgMat;  
+
     var scalp = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "scalp_box.glb", scene, function(object)
      {
         scalp = object[0];
-        scalp.position.x = 130;
+        scalp.position.x = 140;
         scalp.position.z = -50;
         scalp.rotationQuaternion = null; 
         scalp.rotation.y = -3.1415*0.5;
+        scalpGround.setParent(scalp);
+        scalpGround.position.x = 0;
+        scalpGround.position.z = 0;
     });
 
-    // Our built-in 'ground' shape.
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80}, scene);
-    var backgroundMaterial = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
-    backgroundMaterial.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Xataev/London3d/8fe639f0d4009bf37f5ed7dd5c78bd962df7bf84/circle_blured_01.png", scene);
-    backgroundMaterial.diffuseTexture.hasAlpha = true; 
-    backgroundMaterial.shadowLevel = 0.4;
-    ground.material = backgroundMaterial;
+    var cheese = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "cheesegrater.glb", scene, function(object)
+     {
+        cheese = object[0];
+        cheese.position.x = 70;
+        cheese.position.z = -140;
+        cheese.rotationQuaternion = null; 
+        cheese.rotation.y = -3.1415*0.5;
+        cheeseGround.setParent(cheese);
+        cheeseGround.position.x = 0;
+        cheeseGround.position.z = 0;
+    });
+
+
+
+
     return scene;
 };
                 window.initFunction = async function() {
