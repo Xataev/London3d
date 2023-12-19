@@ -64,9 +64,9 @@
         var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
-
-	scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
-	var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
+		
+    scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
     camera.fov = 0.4
     camera.panningSensibility *= 0.1;
     camera.wheelPrecision *= 0.1;
@@ -75,8 +75,15 @@
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
-    var sphere = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/9e030f71bf1647403ed616626fe858b1a1bb278f/", "gerkin.glb", scene);
-  
+    var gerkin = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/9e030f71bf1647403ed616626fe858b1a1bb278f/", "gerkin.glb", scene);
+   
+    var scalp = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "scalp_box.glb", scene, function(object)
+     {
+        scalp = object[0];
+         scalp.position.x = 130;
+        scalp.position.z = -50;
+    });
+
     // Our built-in 'ground' shape.
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80}, scene);
     var backgroundMaterial = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
