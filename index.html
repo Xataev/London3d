@@ -80,8 +80,10 @@
     var scalp = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "scalp_box.glb", scene, function(object)
      {
         scalp = object[0];
-         scalp.position.x = 130;
+        scalp.position.x = 130;
         scalp.position.z = -50;
+        scalp.rotationQuaternion = null; 
+        scalp.rotation.y = -3.1415*0.5;
     });
 
     // Our built-in 'ground' shape.
