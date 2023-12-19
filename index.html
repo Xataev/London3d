@@ -64,9 +64,9 @@
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
-
+    scene.clearColor = new BABYLON.Color3(0.48, 0.49, 0.54);
     scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
-	var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
     camera.fov = 0.4
     camera.panningSensibility *= 0.1;
     camera.wheelPrecision *= 0.1;
