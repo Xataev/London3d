@@ -66,7 +66,7 @@ var createScene = function () {
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0.48, 0.49, 0.54);
     scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("https://raw.githubusercontent.com/Xataev/London3d/main/environment.env", scene);
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
+	var camera = new BABYLON.ArcRotateCamera("Camera", 0, 1.5, 500, new BABYLON.Vector3(0, 90, 0), scene);
     camera.fov = 0.4
     camera.panningSensibility *= 0.1;
     camera.wheelPrecision *= 0.1;
@@ -82,7 +82,7 @@ var createScene = function () {
     var gherkinGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80}, scene);
     var scalpGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 90, height: 90}, scene);
     var cheeseGround = BABYLON.MeshBuilder.CreateGround("ground", {width: 120, height: 120}, scene);
-   
+    var bishop22Ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 160, height: 160}, scene);
    
     var roundBgMat = new BABYLON.BackgroundMaterial("backgroundMaterial", scene);
     roundBgMat.diffuseTexture = new BABYLON.Texture("https://raw.githubusercontent.com/Xataev/London3d/8fe639f0d4009bf37f5ed7dd5c78bd962df7bf84/circle_blured_01.png", scene);
@@ -98,7 +98,7 @@ var createScene = function () {
 
     scalpGround.material = squareBgMat;    
     cheeseGround.material = squareBgMat;  
-
+    bishop22Ground.material = squareBgMat;
     var scalp = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "scalp_box.glb", scene, function(object)
      {
         scalp = object[0];
@@ -114,8 +114,8 @@ var createScene = function () {
     var cheese = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "cheesegrater.glb", scene, function(object)
      {
         cheese = object[0];
-        cheese.position.x = 70;
-        cheese.position.z = -140;
+        cheese.position.x = 80;
+        cheese.position.z = -130;
         cheese.rotationQuaternion = null; 
         cheese.rotation.y = -3.1415*0.5;
         cheeseGround.setParent(cheese);
@@ -123,7 +123,17 @@ var createScene = function () {
         cheeseGround.position.z = 0;
     });
 
-
+    var bishop22 = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/Xataev/London3d/main/", "22bishopsgate.glb", scene, function(object)
+     {
+        bishop22 = object[0];
+        bishop22.position.x = 10;
+        bishop22.position.z = -190;
+        bishop22.rotationQuaternion = null; 
+        bishop22.rotation.y = (-126+180) * Math.PI/180;
+        bishop22Ground.setParent(bishop22);
+        bishop22Ground.position.x = 0;
+        bishop22Ground.position.z = 0;
+    });
 
 
     return scene;
